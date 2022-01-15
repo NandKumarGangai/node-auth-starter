@@ -9,7 +9,7 @@ const connectDB = async () => {
     const { NODE_ENV, MONGO_URI, MONGO_URL_DEV } = process.env;
     const connectionUrl = NODE_ENV === 'production' ? MONGO_URI : MONGO_URL_DEV;
     const conn = await mongoose.connect(connectionUrl);
-    
+
     logger.green(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     if (error?.name === ERROR.DB_PARSE_ERR) {
