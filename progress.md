@@ -13,3 +13,14 @@
   "lint:fix": "eslint . --fix"
 ```
 <hr />
+
+## Add `JEST` unit testing framework [15 Jan 2022]
+- Add `npm i -D jest babel-jest eslint-plugin-jest supertest`.
+- `jest`: Jest is a JavaScript testing framework.
+- `eslint-plugin-jest`: ESLint plugin for Jest DOM that helps users to follow best practices and anticipate common mistakes when writing tests.
+- `supertest`: SuperTest is an HTTP assertions library that allows you to test your Node. js HTTP servers.
+- Added below script to run the test cases.
+
+```json
+  "test": "jest"
+```
