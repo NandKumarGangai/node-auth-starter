@@ -4,13 +4,13 @@
 const ERROR = {
   CAST_ERR: 'CastError',
   CAST_ERR_MSG: 'Resource not found',
-  
+
   DB_PARSE_ERR: 'MongoParseError',
   DB_PARSE_ERR_MSG: 'Error: Invalid connection string.',
 
   DB_CONN_ERR: 'MongoAPIError',
   DB_CONN_ERR_MSG: 'Error:',
-  
+
   VALIDATION_ERR: 'ValidationError',
 
   SERVER_ERR_MSG: 'Server Error',
@@ -30,8 +30,8 @@ const ERROR = {
   INCORRECT_PASS: 'Current password is incorrect',
   USER_NOT_FOUND: 'User not found. Please enter valid email',
   INVALID_RESET_TOKEN: 'Invalid Token'
-}
+};
 
 module.exports = {
   ERROR
-}
+};

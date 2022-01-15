@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const { ERROR } = require('../constants/errors');
-const { EMAIL } = require('../utils/validations')
+const { EMAIL } = require('../utils/validations');
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -21,7 +21,7 @@ const UserSchema = new mongoose.Schema({
   },
   mobile: {
     type: String,
-    required: [true, ERROR.MOBILE_REQ_MSG],
+    required: [true, ERROR.MOBILE_REQ_MSG]
   },
   password: {
     type: String,
@@ -40,7 +40,7 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   }
-})
+});
 
 /**
  * @description Before storing password to DB encrypt it using bcrypt
@@ -59,11 +59,12 @@ UserSchema.pre('save', async function (next) {
  * @returns Singed JWT Token
  */
 UserSchema.methods.getSignedJwtToken = function () {
-  return jwt.sign({ id: this._id },
+  return jwt.sign(
+    { id: this._id },
     process.env.JWT_SECRET,
     { expiresIn: process.env.JWT_EXPIRE }
   );
-}
+};
 
 /**
  * @description Match user entered password to hashed password in database
@@ -71,15 +72,15 @@ UserSchema.methods.getSignedJwtToken = function () {
  * @returns if hash of user entered password matches returns true,
  *  otherwise false
  */
-UserSchema.methods.matchPassword = async function(rawPassword) {
-  return await bcrypt.compare(rawPassword, this.password)
-}
+UserSchema.methods.matchPassword = async function (rawPassword) {
+  return await bcrypt.compare(rawPassword, this.password);
+};
 
 /**
  * @description generate token and store the hash with expiry
  * @returns resetToken
  */
-UserSchema.methods.getResetPasswordToken = function() {
+UserSchema.methods.getResetPasswordToken = function () {
   // Generate token
   const resetToken = crypto.randomBytes(20).toString('hex');
 

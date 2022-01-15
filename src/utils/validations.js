@@ -1,4 +1,5 @@
-const EMAIL = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+// eslint-disable-next-line
+const EMAIL = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
 
 /**
  * @description Password should be min 8 char length and includes
@@ -6,9 +7,8 @@ const EMAIL = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
  * @param {*} password password text
  * @returns true if password text is valid otherwise false
  */
-const isPasswordAllowed = (password) => {
-  return (
-    password.length >= 8 &&
+const isPasswordAllowed = (password) => (
+  password.length >= 8 &&
     // non-alphanumeric
     /\W/.test(password) &&
     // digit
@@ -17,8 +17,7 @@ const isPasswordAllowed = (password) => {
     /[A-Z]/.test(password) &&
     // lowercase letterks
     /[a-z]/.test(password)
-  )
-};
+);
 
 /**
  * @description Email should match the validation regex
@@ -31,4 +30,4 @@ module.exports = {
   EMAIL,
   isPasswordAllowed,
   isEmailAllowed
-}
+};

@@ -1,6 +1,6 @@
 const crypto = require('crypto');
 const User = require('../models/User');
-const asyncHandler = require("../middleware/async");
+const asyncHandler = require('../middleware/async');
 const { ERROR } = require('../constants/errors');
 const { isPasswordAllowed, isEmailAllowed } = require('../utils/validations');
 const ErrorResponse = require('../utils/errorResponse');
@@ -19,7 +19,7 @@ const register = asyncHandler(async (req, res, next) => {
     return res.status(400).json({
       status: false,
       error: ERROR.ALL_FIELDS_MAN
-    })
+    });
   }
 
   // Validate password and email against regex and other params.
@@ -37,7 +37,7 @@ const register = asyncHandler(async (req, res, next) => {
     return res.status(400).json({
       status: false,
       error: errors
-    })
+    });
   }
 
   try {
@@ -83,7 +83,7 @@ const login = asyncHandler(async (req, res, next) => {
 
   // If any of is not valid then return error
   if (!email.trim() || !password.trim()) {
-    return next(new ErrorResponse(ERROR.LOGIN_ALL_FIELDS_MAN, 400))
+    return next(new ErrorResponse(ERROR.LOGIN_ALL_FIELDS_MAN, 400));
   }
 
   // check for existing user
@@ -91,14 +91,14 @@ const login = asyncHandler(async (req, res, next) => {
 
   // If user not found return authentication error
   if (!user) {
-    return next(new ErrorResponse(ERROR.INVALID_CRED, 401))
+    return next(new ErrorResponse(ERROR.INVALID_CRED, 401));
   }
 
   // Check for password matches or not, if not return error
   const isMatch = await user.matchPassword(password);
 
   if (!isMatch) {
-    return next(new ErrorResponse(ERROR.INVALID_CRED, 401))
+    return next(new ErrorResponse(ERROR.INVALID_CRED, 401));
   }
 
   // If both email and password matches return success and JWT signed token.
@@ -119,7 +119,7 @@ const logout = asyncHandler(async (req, res, next) => {
   res.status(200).json({
     success: true,
     data: {}
-  })
+  });
 });
 
 /**
@@ -149,7 +149,7 @@ const updateDetails = asyncHandler(async (req, res, next) => {
       status: false,
       error: ERROR.UPDATE_FIELDS_MAN
     });
-  };
+  }
   const fieldsToUpdate = { name: name.trim(), mobile: mobile.trim() };
 
   try {
@@ -192,7 +192,7 @@ const updatePassword = asyncHandler(async (req, res, next) => {
       return res.status(400).json({
         status: false,
         error: errors
-      })
+      });
     }
 
     user.password = newPassword.trim();
@@ -227,7 +227,7 @@ const forgotPassword = asyncHandler(async (req, res, next) => {
   Please make a PUT request to: \n\n ${resetUrl}`;
 
   try {
-    //@TODO send email for password reset.
+    // @TODO send email for password reset.
     /* await sendEmail({
       email: user.email,
       subject: 'Password reset token',
@@ -235,7 +235,7 @@ const forgotPassword = asyncHandler(async (req, res, next) => {
     }); */
 
     /* res.status(200).json({ success: true, data: 'Email sent' }); */
-    //@TODO Do not send link in res, send via mail
+    // @TODO Do not send link in res, send via mail
 
     res.status(200).json({
       success: true,
@@ -253,7 +253,6 @@ const forgotPassword = asyncHandler(async (req, res, next) => {
     // @TODO Update this block once email functionality added.
     return next(new ErrorResponse('Email could not be sent', 500));
   }
-
 });
 
 /**
@@ -285,7 +284,7 @@ const resetPassword = asyncHandler(async (req, res, next) => {
     return res.status(400).json({
       status: false,
       error: errors
-    })
+    });
   }
 
   // Get hashed token
@@ -310,7 +309,7 @@ const resetPassword = asyncHandler(async (req, res, next) => {
       data: {
         user: parseUser(user)
       }
-    })
+    });
   } catch (error) {
     return next(new ErrorResponse(error, 500));
   }
@@ -324,7 +323,7 @@ const sendTokenResponse = (user, statusCode, res) => {
   const options = {
     expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000),
     httpOnly: true
-  }
+  };
 
   if (process.env.NODE_ENV === 'production') {
     options.secure = true;
@@ -342,19 +341,19 @@ const sendTokenResponse = (user, statusCode, res) => {
 };
 
 const parseUser = user => {
-  const omit = ['__v', 'password']
+  const omit = ['__v', 'password'];
   const keys = Object.keys(user._doc);
 
   if (keys.length > 0) {
     keys.forEach(key => {
       if (omit.includes(key)) {
-        delete user._doc[key]
+        delete user._doc[key];
       }
-    })
+    });
   }
 
   return user;
-}
+};
 module.exports = {
   register,
   login,
@@ -364,4 +363,4 @@ module.exports = {
   resetPassword,
   updateDetails,
   updatePassword
-}
+};
