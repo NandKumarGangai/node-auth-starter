@@ -1,0 +1,20 @@
+name: Check for tests and lints
+on: [push]
+jobs:
+  build_app:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14.17.0'
+      - name: Install Dependencies
+        run: npm i
+      - name: Build Project
+        run: echo '@TODO'
+      - name: Run Unit Test Cases
+        run: npm run test
+      - name: Run Lint Checks
+        run: npm run lint
+      - name: Checked Completed
+        run: echo 'All checks are passed'
